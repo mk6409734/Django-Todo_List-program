@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'todo/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'todo/css/style.css' %}">
+    
+
+   
+</head>
+<body class="container-fluid">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info">
+        <strong>{{message}}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <center class="row">
+        <h1><i>__TODO LIST__</i></h1>
+        <hr />
+    </center>
+
+    <div class="row">
+        <div class="col-md-8">
+            {% for i in list %}
+            <div class="card">
+                <center><b>{{i.title}}</b></center>
+                <hr />
+                {{i.date}}
+                <hr />
+                {{i.details}}
+                <br />
+                <br />
+                <form action="/del/{{i.id}}" method="POST" style="padding-right: 4%; padding-bottom: 3%;">
+                    {% csrf_token %}
+                    <button value="remove" type="submit" class="btn btn-primary" style="float: right;"><i class="fa-solid fa-trash"></i> Remove</button>
+
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <div class="submit_form">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{forms.as_p}}
+                    <center>
+                        <input type="submit" class="btn btn-success" value="submit">
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script src="{% static 'todo/js/all.min.js' %}"></script>   
+<script src="{% static 'todo/js/jquery.js' %}"></script>
+<script src="{% static 'todo/js/popper.js' %}"></script>
+<script src="{% static 'todo/js/bootstrap.js' %}"></script> 
+</body>
+</html>
